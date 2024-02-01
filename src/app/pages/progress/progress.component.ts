@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-progress',
   templateUrl: './progress.component.html',
-  styles: ``
+  styleUrls: ['./progress.component.scss']
 })
 export class ProgressComponent {
 
