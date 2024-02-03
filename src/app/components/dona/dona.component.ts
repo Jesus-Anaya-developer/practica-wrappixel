@@ -9,24 +9,22 @@ import { ChartData, ChartType } from 'chart.js';
 export class DonaComponent {
 
   @Input() title: string = 'Sin título';
-  @Input() data: number[] = [];
-  @Input() labels: string[] = [];
+  @Input() doughnutData: ChartData<'doughnut'> = {
+    datasets: []
+  };
 
-  // Doughnut
-  public doughnutChartLabels: string[] = this.labels;
+  public doughnutLabels1: string[] = ['Motos', 'Coches', 'Camiones'];
 
   public doughnutChartData: ChartData<'doughnut'> = {
-    labels: this.doughnutChartLabels,
+    labels: this.doughnutLabels1,
     datasets: [
       {
-        data: this.data.join(',').split(',').map(Number),
-        backgroundColor: [
-          '#81F7F3',
-          '#00FFFF',
-          '#088A85',
-        ]
-      },
-    ],
+        data: [350, 450, 100],
+        backgroundColor: ['#B45F04', '#F7C137', '#F7F7F7']
+      }
+    ]
   };
+
   public doughnutChartType: ChartType = 'doughnut';
+
 }
