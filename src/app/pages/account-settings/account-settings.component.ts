@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SettingsService } from '../../services/settings.service';
 
 @Component({
   selector: 'app-account-settings',
@@ -7,55 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountSettingsComponent implements OnInit {
 
-  //Se saca de la funcion changeTheme para que sea accesible desde el html y no salte al DOM
-  public themeElement = document.querySelector('#theme');
-  public links: HTMLElement[] = []; // Initialize the "links" property
+  constructor(private settingsService: SettingsService) { }
 
   ngOnInit(): void {
-    //Al iniciar el componente, se ejecuta las siguientes funciones
-    this.links = Array.from(document.querySelectorAll('.selector'));
-    this.checkCurrentTheme();
+    // Se llama a la funcion checkCurrentTheme del servicio para que se ejecute al cargar la pagina
+    this.settingsService.checkCurrentTheme();
   }
 
-  /**
-   * Changes the theme of the application.
-   *
-   * @param theme - The name of the theme to apply.
-   */
+  // * Se agrega la funcion changeTheme para que sea accesible desde el html
   changeTheme(theme: string) {
-    // If the theme exists, change the href attribute to the new theme.
-    if (this.themeElement) {
-      this.themeElement.setAttribute('href', `./assets/css/colors/${theme}.css`);
-      // Save the theme in the local storage.
-      localStorage.setItem('theme', `./assets/css/colors/${theme}.css`);
-    }
-
-    this.checkCurrentTheme();
+    // Se llama a la funcion changeTheme del servicio para cambiar el tema
+    this.settingsService.changeTheme(theme);
   }
 
-  checkCurrentTheme() {
-
-
-    this.links.forEach(elem => {
-
-      //Remover la clase working
-      elem.classList.remove('working');
-
-      // Obtener el data-theme para comparar con el tema actual
-      const btnTheme = elem.getAttribute('data-theme');
-
-      // Obtener el tema actual
-      const btnThemeUrl = `./assets/css/colors/${btnTheme}.css`;
-
-      // Obtener el tema actual del localStorage
-      const currentTheme = this.themeElement?.getAttribute('href'); // Add null check
-
-      // Comparar el tema actual con el tema del boton
-      if (btnThemeUrl === currentTheme) {
-        // Si es el mismo tema, agregar la clase working
-        elem.classList.add('working');
-      }
-    });
-  }
 
 }

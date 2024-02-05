@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SettingsService } from '../services/settings.service';
 
 @Component({
   selector: 'app-pages',
@@ -7,16 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PagesComponent implements OnInit {
 
-  //Se saca de la funcion changeTheme para que sea accesible desde el html y no salte al DOM
-  public themeElement = document.querySelector('#theme');
 
-  ngOnInit() {
 
-    const theme = localStorage.getItem('theme') || './assets/css/colors/default-dark.css';
-    // If the theme exists, change the href attribute to the new theme.
-    if (this.themeElement) {
-      this.themeElement.setAttribute('href', theme);
-    }
-  }
+  constructor(private settingsServices: SettingsService) { }
+
+  ngOnInit() { }
 
 }
