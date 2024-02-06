@@ -12,8 +12,10 @@ export class SidebarService {
       submenu: [
         // * Las rutas se sacan de las que definimos en pages.routing.ts
         { title: 'Main', url: '/' },
-        { title: 'progressBar', url: 'progress' },
         { title: 'Grafica', url: 'grafica1' },
+        { title: 'progressBar', url: 'progress' },
+        { title: 'Promesas', url: 'promesas' },
+        { title: 'rxjs', url: 'rxjs' },
       ]
     }
   ];
