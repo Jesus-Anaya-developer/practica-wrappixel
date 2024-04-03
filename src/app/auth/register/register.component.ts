@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup, FormControlOptions } from '@angular/forms';
-//import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 import { UsuarioService } from '../../services/usuario.service';
 @Component({
@@ -53,7 +53,7 @@ export class RegisterComponent {
           console.log(resp);
         },
         error: (err: any) => {
-          console.warn(err.error.msg);
+          Swal.fire('Error', err.error.msg, 'error');
         }
       });
 
