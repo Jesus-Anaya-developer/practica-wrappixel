@@ -1,14 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup, FormControlOptions } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
 import Swal from 'sweetalert2';
+
+declare const google: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+
+export class LoginComponent implements AfterViewInit {
+
+  @ViewChild('googleBtn') googleBtn!: ElementRef;
 
   public loginForm: FormGroup = this.fb.group({
 
@@ -29,6 +34,29 @@ export class LoginComponent {
   } as FormControlOptions);
 
   constructor(private fb: FormBuilder, private usuarioService: UsuarioService, private router: Router) { }
+
+  ngAfterViewInit(): void {
+    this.googleInit();
+  }
+
+  handleCredentialResponse(response: any) {
+    console.log("Encoded JWT ID token" + response.credential);
+    this.usuarioService.loginGoogle(response.credential)
+      .subscribe(resp => {
+        this.router.navigateByUrl('/dashboard');
+      });
+  }
+
+  googleInit() {
+    google.accounts.id.initialize({
+      client_id: "305258200671-4dp28hp1796snc712e4jn55jha2gaefu.apps.googleusercontent.com",
+      callback: (response: any) => this.handleCredentialResponse(response)
+    });
+    google.accounts.id.renderButton(
+      this.googleBtn.nativeElement,
+      { theme: "outline", size: "large" }  // customization attributes
+    );
+  }
 
   login() {
 
@@ -52,5 +80,6 @@ export class LoginComponent {
         }
       });
   }
+
 
 }
